@@ -6,105 +6,364 @@
 <link rel="stylesheet" href="css/index.css">
 <style>
     .image-row img {
-    width: 30%;
-    max-width: 100%;  /* 追加！container幅を超えないようにする */
-    height: auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    }   
+        width: 30%;
+        max-width: 100%;
+        height: auto;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
     body {
-    font-family: Arial, sans-serif;
-    background-color: rgb(209, 242, 235);
-    margin: 0;
-    padding: 20px;
+        font-family: Arial, sans-serif;
+        background-color: rgb(209, 242, 235);
+        margin: 0;
+        padding: 20px;
     }
+
     .container {
-    max-width: 900px;
-    margin: auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(150, 99, 99, 0.1);
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
     }
+
     .mn {
-    text-align: center;
-    margin-bottom: 30px;
+        text-align: center;
+        margin-bottom: 30px;
     }
-    h2, h3 {
-    color: #333;
+
+    h2, h3, h4 {
+        color: #333;
+        margin-top: 20px;
     }
+
     p {
-    line-height: 1.6;
+        line-height: 1.6;
     }
+
     ul {
-    padding-left: 20px;
+        padding-left: 20px;
     }
+
     img {
-    max-width: 100%;
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 20px;
     }
+
+    .caption {
+        text-align: center;
+        font-style: italic;
+        margin-top: 10px;
+        color: #555;
+    }
+
+    .note {
+        background-color: #f3f3f3;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
     .back-button {
-    text-align: center;
-    margin-top: 40px;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .back-button input[type="button"] {
+        padding: 8px 20px;
+        border-radius: 6px;
+        border: 1px solid #333;
+        background: #fff;
+        cursor: pointer;
+    }
+
+    .back-button input[type="button"]:hover {
+        background: #eee;
+    }
+
+    /* ---------- タブUI ---------- */
+    .tabset {
+        margin-top: 10px;
+    }
+
+    /* ラジオボタン本体を画面外に追い出す */
+    .tabset > input[type="radio"] {
+        position: absolute;
+        left: -200vw;
+    }
+
+    .tabset .tab-panel {
+        display: none;
+    }
+
+    /* input と panel の対応づけ（2タブ分） */
+    .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2) {
+        display: block;
+    }
+
+    /* タブのラベル */
+    .tabset > label {
+        position: relative;
+        display: inline-block;
+        padding: 10px 15px 12px;
+        border: 1px solid transparent;
+        border-bottom: 0;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .tabset > label::after {
+        content: "";
+        position: absolute;
+        left: 15px;
+        bottom: 0;
+        width: 22px;
+        height: 3px;
+        background: #8d8d8d;
+    }
+
+    /* アクティブ・ホバー時の色 */
+    .tabset > label:hover,
+    .tabset > input:focus + label {
+        color: #06c;
+    }
+
+    .tabset > label:hover::after,
+    .tabset > input:focus + label::after,
+    .tabset > input:checked + label::after {
+        background: #06c;
+    }
+
+    /* タブ全体の下に引く線 & 面 */
+    .tab-panels {
+        padding: 15px 10px 5px;
+        border-top: 1px solid #ccc;
+        margin-top: -1px;
+    }
+
+    /* ---------- 中間発表 PDF ビューワ ---------- */
+    #pdf-container {
+        text-align: center;
+        margin: 30px 0 20px;
+    }
+
+    #pdf-viewer {
+        width: 95%;
+        max-width: 850px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
+    .pdf-controls {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        font-size: 14px;
+    }
+
+    .pdf-btn {
+        padding: 6px 16px;
+        border-radius: 4px;
+        border: 1px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .pdf-btn:hover {
+        background: #1f8bb3;
+    }
+
+    .page-info {
+        color: #333;
+    }
+
+    .download-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px 18px;
+        border-radius: 4px;
+        border: 1px solid #27acd9;
+        color: #27acd9;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .download-btn:hover {
+        background: #27acd9;
+        color: #fff;
+    }
+
+    /* 「自作ゲーム制作」タブ内の見た目少しだけ整える */
+    .game-note {
+        background-color: #f3f3f3;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-top: 10px;
     }
 </style>
 </head>
 <body>
 
 <div class="mn">
-<h2>八幡真也 - 研究詳細 / Research Details</h2>
+    <h2>八幡真也 - 研究詳細 / Research Details</h2>
 </div>
+
 <div class="container">
 
-<h3>臨地実務実習I</h3>
-<p>
-    株式会社ミロク情報サービスで、社員情報管理アプリケーションを作成しました。<br>
-    社員情報を追加、参照、更新、削除できます。
-</p>
-<a href="https://drive.google.com/file/d/104GEqnji5g-8pJk0kTK0wjxczLTdgZOS/view?usp=sharing">
-    <img src="img/yahata_s1.png" alt="画像の説明">
-    <!-- <img src="https://drive.google.com/uc?id=104GEqnji5g-8pJk0kTK0wjxczLTdgZOS"> -->
-</a>
+    <!-- ★ タブセット開始 ★ -->
+    <div class="tabset">
+        <!-- タブ1: 実習・中間発表 -->
+        <input type="radio" name="tabset" id="tab1" aria-controls="main" checked>
+        <label for="tab1">実習・中間発表</label>
 
+        <!-- タブ2: 自作ゲーム制作 -->
+        <input type="radio" name="tabset" id="tab2" aria-controls="game">
+        <label for="tab2">自作ゲーム制作</label>
 
-<h3>臨地実務実習II</h3>
-<p>
-    株式会社チアリーで、2Dゲームを作成しました。<br>
-    私のチームで作ったゲームは「トレジャージャンプ」という名前のゲームです。キャラクターを動かしジャンプして、ステージクリアを目指すものとなっています
-</p>
-<a href="https://drive.google.com/file/d/1HcMnJI8GEyWAe4776HdJ9qUTGO03tqbi/view?usp=sharing">
-    <img src="img/yahata_s2.png" >
-</a>
+        <div class="tab-panels">
+            <!-- ===== タブ1の中身 ===== -->
+            <section id="main" class="tab-panel">
 
-<h3>自作ゲーム制作</h3>
-<div class="image-row">
-    <img src="img/yahata_g1.png" alt="カメラ視点">　
-    <img src="img/yahata_g2.png" alt="病院の廊下">
-    <img src="img/yahata_g3.png" alt="電車内イベント">
+                <h3>臨地実務実習I</h3>
+                <p>
+                    株式会社ミロク情報サービスで、社員情報管理アプリケーションを作成しました。<br>
+                    社員情報を追加、参照、更新、削除できます。
+                </p>
+                <a href="https://drive.google.com/file/d/104GEqnji5g-8pJk0kTK0wjxczLTdgZOS/view?usp=sharing">
+                    <img src="img/yahata_s1.png" alt="社員情報管理アプリケーション画面">
+                </a>
+
+                <h3>臨地実務実習II</h3>
+                <p>
+                    株式会社チアリーで、2Dゲームを作成しました。<br>
+                    チームで制作したゲームは「トレジャージャンプ」という名前のゲームです。キャラクターを動かしジャンプして、ステージクリアを目指すゲームとなっています。
+                </p>
+                <a href="https://drive.google.com/file/d/1HcMnJI8GEyWAe4776HdJ9qUTGO03tqbi/view?usp=sharing">
+                    <img src="img/yahata_s2.png" alt="トレジャージャンプの画面">
+                </a>
+
+                <h3>中間発表（メタバース空間における八幡宮の文化体験）</h3>
+                <p>
+                    メタバースプラットフォーム Spatial と Unity を用いて、新潟県五泉市の八幡宮を再現し、<br>
+                    花火・おみくじ・風鈴などの文化的要素を VR 上で体験できるようにした中間発表資料です。
+                </p>
+
+                <div id="pdf-container">
+                    <canvas id="pdf-viewer"></canvas>
+                    <div class="pdf-controls">
+                        <button class="pdf-btn" id="prev">◀ Prev</button>
+                        <span class="page-info">
+                            <span id="page-num"></span> / <span id="page-count"></span>
+                        </span>
+                        <button class="pdf-btn" id="next">Next ▶</button>
+                    </div>
+                    <a href="img/20122071_yahata_mid.pdf" download class="download-btn">
+                        PDF download
+                    </a>
+                </div>
+
+            </section>
+
+            <!-- ===== タブ2の中身（自作ゲーム制作） ===== -->
+            <section id="game" class="tab-panel">
+
+                <h3>自作ゲーム制作</h3>
+
+                <div class="image-row">
+                    <img src="img/yahata_g1.png" alt="カメラ視点">
+                    <img src="img/yahata_g2.png" alt="病院の廊下">
+                    <img src="img/yahata_g3.png" alt="電車内イベント">
+                </div>
+
+                <div class="caption">視点切り替えによるイベント進行</div>
+
+                <div class="game-note">
+                    <p>
+                        本ゲームでは、<strong>カメラ視点を切り替える</strong>ことで、特定のイベントが発生し、物語が進行します。<br>
+                        例えば、<strong>病院の廊下</strong>に視点を切り替えると特定のキャラクターが出現したり、
+                        <strong>電車内</strong>のシーンに移動するなどのイベントが発生します。
+                    </p>
+                    <h4>使用ツール</h4>
+                    <ul>
+                        <li>Unity（ゲーム開発）</li>
+                        <li>CLIP STUDIO PAINT（ビジュアルアセット制作）</li>
+                        <!-- ゲーム本体への隠しリンク（元ファイル準拠で残してあります） -->
+                        <a href="https://drive.google.com/file/d/1J7nsFwTgtR0ZYPcXzt...usp=sharing"
+                           download
+                           style="opacity: 0;">
+                           まっさらなクリアなリンク(自己責任)
+                        </a>
+                    </ul>
+                </div>
+
+            </section>
+        </div>
+    </div>
+    <!-- ★ タブセットここまで ★ -->
+
+    <div class="back-button">
+        <a href="index.html#tab-2025">
+            <input type="button" value="Back to Lab / 研究室に戻る">
+        </a>
+    </div>
+
 </div>
 
-<div class="caption">視点切り替えによるイベント進行</div>
+<!-- PDF.js 読み込み & 表示用スクリプト -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script>
+    // 表示したいPDFのパス
+    const url = "img/20122071_yahata_mid.pdf";
 
-<div class="note">
-    <p>
-    本ゲームでは、<strong>カメラ視点を切り替える</strong>ことで、特定のイベントが発生し、物語が進行します。<br>
-    例えば、<strong>病院の廊下</strong>に視点を切り替えると、特定のキャラクターが出現したり、<strong>電車内</strong>のシーンに移動するなどのイベントが発生します。
-    </p>
-    <h4>使用ツール</h4>
-    <ul>
-    <li>Unity（ゲーム開発）</li>
-    <li>CLIP STUDIO PAINT（ビジュアルアセット制作）</li>
-    <a href="https://drive.google.com/file/d/1J7nsFwTgtR0ZYPcXztp831NF9ntudSQO/view?usp=sharing" download style="opacity: 0;">まっさらなクリアなリンク(自己責任)</a>
-    </ul>
-</div>
+    let pdfDoc = null;
+    let pageNum = 1;
+    const canvas = document.getElementById("pdf-viewer");
+    const ctx = canvas.getContext("2d");
 
+    // PDF読み込み
+    pdfjsLib.getDocument(url).promise.then((pdf) => {
+        pdfDoc = pdf;
+        document.getElementById("page-count").textContent = pdf.numPages;
+        renderPage(pageNum);
+    });
 
+    function renderPage(num) {
+        pdfDoc.getPage(num).then((page) => {
+            const viewport = page.getViewport({ scale: 1.3 });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
 
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            page.render(renderContext);
 
-<div class="back-button">
-    <a href="index.html#tab-2025"><input type="button" value="Back to Lab / 研究室に戻る"></a></div>
-</div>
+            document.getElementById("page-num").textContent = num;
+        });
+    }
+
+    document.getElementById("prev").addEventListener("click", () => {
+        if (!pdfDoc || pageNum <= 1) return;
+        pageNum--;
+        renderPage(pageNum);
+    });
+
+    document.getElementById("next").addEventListener("click", () => {
+        if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+        pageNum++;
+        renderPage(pageNum);
+    });
+</script>
+
 </body>
 </html>
