@@ -76,20 +76,18 @@
         padding: 8px 20px;
         border-radius: 6px;
         border: 1px solid #333;
-        background: #fff;
+        background: #616161;
         cursor: pointer;
     }
 
     .back-button input[type="button"]:hover {
-        background: #eee;
+        background: #000000;
     }
 
-    /* ---------- タブUI ---------- */
     .tabset {
         margin-top: 10px;
     }
 
-    /* ラジオボタン本体を画面外に追い出す */
     .tabset > input[type="radio"] {
         position: absolute;
         left: -200vw;
@@ -99,13 +97,11 @@
         display: none;
     }
 
-    /* input と panel の対応づけ（2タブ分） */
     .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
     .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2) {
         display: block;
     }
 
-    /* タブのラベル */
     .tabset > label {
         position: relative;
         display: inline-block;
@@ -127,7 +123,6 @@
         background: #8d8d8d;
     }
 
-    /* アクティブ・ホバー時の色 */
     .tabset > label:hover,
     .tabset > input:focus + label {
         color: #06c;
@@ -139,14 +134,12 @@
         background: #06c;
     }
 
-    /* タブ全体の下に引く線 & 面 */
     .tab-panels {
         padding: 15px 10px 5px;
         border-top: 1px solid #ccc;
         margin-top: -1px;
     }
 
-    /* ---------- 中間発表 PDF ビューワ ---------- */
     #pdf-container {
         text-align: center;
         margin: 30px 0 20px;
@@ -202,7 +195,6 @@
         color: #fff;
     }
 
-    /* 「自作ゲーム制作」タブ内の見た目少しだけ整える */
     .game-note {
         background-color: #f3f3f3;
         padding: 15px 20px;
@@ -219,18 +211,14 @@
 
 <div class="container">
 
-    <!-- ★ タブセット開始 ★ -->
     <div class="tabset">
-        <!-- タブ1: 実習・中間発表 -->
         <input type="radio" name="tabset" id="tab1" aria-controls="main" checked>
         <label for="tab1">実習・中間発表</label>
 
-        <!-- タブ2: 自作ゲーム制作 -->
         <input type="radio" name="tabset" id="tab2" aria-controls="game">
         <label for="tab2">自作ゲーム制作</label>
 
         <div class="tab-panels">
-            <!-- ===== タブ1の中身 ===== -->
             <section id="main" class="tab-panel">
 
                 <h3>臨地実務実習I</h3>
@@ -273,7 +261,6 @@
 
             </section>
 
-            <!-- ===== タブ2の中身（自作ゲーム制作） ===== -->
             <section id="game" class="tab-panel">
 
                 <h3>自作ゲーム制作</h3>
@@ -296,11 +283,10 @@
                     <ul>
                         <li>Unity（ゲーム開発）</li>
                         <li>CLIP STUDIO PAINT（ビジュアルアセット制作）</li>
-                        <!-- ゲーム本体への隠しリンク（元ファイル準拠で残してあります） -->
-                        <a href="https://drive.google.com/file/d/1J7nsFwTgtR0ZYPcXzt...usp=sharing"
-                           download
-                           style="opacity: 0;">
-                           まっさらなクリアなリンク(自己責任)
+                            <a href="https://drive.google.com/file/d/1J7nsFwTgtR0ZYPcXzt...usp=sharing"
+                            download
+                            style="opacity: 0;">
+                            まっさらなクリアなリンク(自己責任)
                         </a>
                     </ul>
                 </div>
@@ -308,7 +294,6 @@
             </section>
         </div>
     </div>
-    <!-- ★ タブセットここまで ★ -->
 
     <div class="back-button">
         <a href="index.html#tab-2025">
@@ -318,10 +303,8 @@
 
 </div>
 
-<!-- PDF.js 読み込み & 表示用スクリプト -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <script>
-    // 表示したいPDFのパス
     const url = "img/20122071_yahata_mid.pdf";
 
     let pdfDoc = null;
@@ -329,7 +312,6 @@
     const canvas = document.getElementById("pdf-viewer");
     const ctx = canvas.getContext("2d");
 
-    // PDF読み込み
     pdfjsLib.getDocument(url).promise.then((pdf) => {
         pdfDoc = pdf;
         document.getElementById("page-count").textContent = pdf.numPages;
