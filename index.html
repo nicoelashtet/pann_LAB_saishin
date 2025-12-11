@@ -141,6 +141,20 @@
 
     document.getElementById(tabId).classList.add('active');
   }
+
+  function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  window.addEventListener('load', () => {
+    const hash = window.location.hash.substring(1); // '#tab-2025' → 'tab-2025'
+    if (hash) {
+      showTab(hash);
+    }
+  });
 </script>
 
 </body>
