@@ -162,7 +162,6 @@
         color: #444;
       }
 
-      /* Back ボタン */
       .back-button {
         text-align: center;
         margin-top: 60px;
@@ -212,6 +211,41 @@
       .tech-box ul li {
         margin-bottom: 6px;
       }
+
+      .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .tab-btn {
+        padding: 10px 24px;
+        border: 1px solid #27acd9;
+        background: white;
+        color: #27acd9;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.25s;
+      }
+
+      .tab-btn:hover {
+        background: #27acd9;
+        color: white;
+      }
+
+      .tab-btn.active {
+        background: #27acd9;
+        color: white;
+      }
+
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
     </style>
   </head>
 
@@ -220,21 +254,25 @@
       <h2>実習と研究</h2>
     </div>
 
+    <!-- ▼ タブメニュー -->
+    <div class="tabs">
+      <button class="tab-btn active" data-target="intern1">実習 I</button>
+      <button class="tab-btn" data-target="intern2">実習 II</button>
+      <button class="tab-btn" data-target="zemi">ゼミ中間発表</button>
+    </div>
+
     <div class="container">
 
-      <div class="section-block intern1">
+      <!-- ▼ 実習I -->
+      <div class="section-block intern1 tab-content active" id="intern1">
         <h1>実習I 企業先</h1>
         <h2>Adam-i Ventures株式会社</h2>
 
         <h3>テーマ</h3>
-        <p>
-          アフリカと⽇本企業を繋ぐビジネスマッチングプラットフォームの構築とコンサルティング
-        </p>
+        <p>アフリカと⽇本企業を繋ぐビジネスマッチングプラットフォームの構築とコンサルティング</p>
 
-        <h3>システムの流れ</h3>
-        <p>
-          今回は開発は行わず、日本語翻訳、営業、コンサルティングに関わった
-        </p>
+        <h3>担当業務</h3>
+        <p>開発はせず、翻訳、日本向け営業、資料作成、コンサルティングサポートを担当</p>
 
         <h3>使用技術</h3>
         <p>なし</p>
@@ -242,13 +280,12 @@
         <h3>ポスター</h3>
         <div class="poster">
           <img src="img/2023_Internship1_Poster_Adam_Innovations.png" alt="ポスター" />
-          <a href="img/2023_Internship1_Poster_Adam_Innovations.png" download class="download-btn">
-            download
-          </a>
+          <a href="img/2023_Internship1_Poster_Adam_Innovations.png" download class="download-btn">download</a>
         </div>
       </div>
 
-      <div class="section-block intern2">
+      <!-- ▼ 実習 II -->
+      <div class="section-block intern2 tab-content" id="intern2">
         <h1>実習II 企業先</h1>
         <h2>エクスウェア株式会社</h2>
 
@@ -294,22 +331,19 @@
         <h3>ポスター</h3>
         <div class="poster">
           <img src="img/2024_Internship2_Poster_xware.png" alt="ポスター" />
-          <a href="img/2024_Internship2_Poster_xware.png" download class="download-btn">
-            download
-          </a>
+          <a href="img/2024_Internship2_Poster_xware.png" download class="download-btn">download</a>
         </div>
       </div>
 
-      <div class="section-block zemi">
+      <!-- ▼ ゼミ -->
+      <div class="section-block zemi tab-content" id="zemi">
         <h1>ゼミ研究 中間発表</h1>
 
         <h3>テーマ</h3>
         <p>複数基準に基づく顔属性と画像解析を用いた写真の自動検証</p>
 
         <h3>研究目的</h3>
-        <p>
-          自宅でも正確で規定に準拠した写真を撮影できる環境を構築し、さらにAIが改善をサポートする仕組みを作ることが目的。
-        </p>
+        <p>自宅でも正確で規定に準拠した写真を撮影できる環境を構築し、さらにAIが改善をサポートする仕組みを作ることが目的。</p>
 
         <h3>研究背景</h3>
         <p>
@@ -317,7 +351,7 @@
           既存の自動判定は「合格/不合格」だけで改善提案が少ないため、ユーザーの撮影スキル向上を支援する仕組みが求められている。
         </p>
 
-        <h3>発表資料（スライド表示）</h3>
+        <h3>発表資料</h3>
 
         <div id="pdf-container">
           <canvas id="pdf-viewer"></canvas>
@@ -331,19 +365,36 @@
         </div>
 
         <div class="poster">
-          <a href="img/20122056_長橋弘幸_中間発表資料.pdf" download class="download-btn">
-            PDF download
-          </a>
+          <a href="img/20122056_長橋弘幸_中間発表資料.pdf" download class="download-btn">PDF download</a>
         </div>
       </div>
 
       <div class="back-button">
-        <a href="index.html#tab-2025"
-          ><input type="button" value="Back to Lab / 研究室に戻る"
-        /></a>
+        <a href="index.html#tab-2025">
+          <input type="button" value="Back to Lab / 研究室に戻る" />
+        </a>
       </div>
 
     </div>
+
+    <script>
+      const tabButtons = document.querySelectorAll(".tab-btn");
+      const tabContents = document.querySelectorAll(".tab-content");
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.getAttribute("data-target");
+
+          tabButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          tabContents.forEach(c => {
+            c.classList.remove("active");
+            c.style.display = (c.id === target ? "block" : "none");
+          });
+        });
+      });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
